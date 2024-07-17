@@ -5,3 +5,4 @@ Created on MQTT Broker that would handle MQTT requests from both the ends, publi
 Tested a sample print statement code in micropython on ESP32 board.  
 Added credentials to wifi and mqtt broker in a JSON file named "creds.json".  
 Wrote micropython code to read the JSON, parse it and connect to the WiFi with credentials.  
+Added code micropython to connect to MQTT server
