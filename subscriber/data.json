@@ -1,0 +1,8 @@
+{
+    "MQTT_BROKER": "test.mosquitto.org",
+    "MQTT_PORT": 1883,
+    "MQTT_TOPIC": "zenIot123/mqtt",
+    "TEMPERATURE_THRESHOLD": 80,
+    "THRESHOLD_DURATION": 5,
+    "CLIENT_ID": "python-zen-subscriber"
+}

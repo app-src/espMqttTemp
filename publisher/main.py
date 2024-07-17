@@ -15,10 +15,11 @@ mqtt_port = 0
 mqtt_username = ""
 mqtt_password = ""
 client_id = ""
+topic = ""
 
 # Load MQTT credentials from JSON file
 def load_credentials():
-    global mqtt_broker, mqtt_port, mqtt_username, mqtt_password, WIFI_SSID,WIFI_PASSWORD,client_id
+    global mqtt_broker, mqtt_port, mqtt_username, mqtt_password, WIFI_SSID,WIFI_PASSWORD,client_id,topic
     try:
         with open("creds.json") as f:
             data = json.load(f)
@@ -27,6 +28,7 @@ def load_credentials():
             client_id = data["client_id"]
             mqtt_username = data["username"]
             mqtt_password = data["password"]
+            topic = data["topic"]
             WIFI_SSID  = data["ssid"]
             WIFI_PASSWORD = data["wifi_password"]
     except Exception as e:
@@ -66,7 +68,8 @@ def main():
     print("Connected to MQTT broker")
     
     # Subscribe to a topic
-    client.subscribe(b"home/temperature")
+    client.subscribe(topic.encode('utf-8'))
+    client.publish(topic.encode('utf-8'),"HI")
     
     try:
         while True:

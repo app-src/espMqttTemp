@@ -3,7 +3,7 @@
     "port": 1883,
     "username": "",
     "password": "",
-    "client_id": "zenIot123",
+    "client_id": "esp-zen-publisher",
     "topic": "zenIot123/mqtt",
     "ssid": "vk",
     "wifi_password": "123456789"
