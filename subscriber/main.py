@@ -3,7 +3,7 @@ import paho.mqtt.client as mqtt
 import json
 
 # Load MQTT settings from JSON file
-with open("subscriber\data.json", "r") as file:
+with open("data.json", "r") as file:
     data = json.load(file)
     MQTT_BROKER = data.get("MQTT_BROKER")
     MQTT_PORT = data.get("MQTT_PORT")
@@ -25,7 +25,8 @@ def on_message(client, userdata, msg):
         timestamp = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
 
         # Save data locally with timestamp
-        with open("sensor_data.txt", "a") as f:
+        path = os.getcwd()
+        with open(path+"\\sensor_data.txt", "a") as f:
             f.write("{"+f"\"timestamp\" : \"{timestamp}\",  \"temperature\": {temperature:.2f}"+"}\n")
 
         # Check if temperature exceeds threshold
