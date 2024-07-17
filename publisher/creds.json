@@ -1,0 +1,10 @@
+{
+    "broker": "test.mosquitto.org",
+    "port": 1883,
+    "username": "",
+    "password": "",
+    "client_id": "zenIot123",
+    "topic": "zenIot123/mqtt",
+    "ssid": "vk",
+    "wifi_password": "123456789"
+}  
