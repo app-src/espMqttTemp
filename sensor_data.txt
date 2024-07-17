@@ -1,3 +1,0 @@
-{"timestamp" : "2024-07-17 21:51:55",  "temperature": 60.00}
-{"timestamp" : "2024-07-17 21:52:11",  "temperature": 60.00}
-{"timestamp" : "2024-07-17 21:53:05",  "temperature": 60.00}
