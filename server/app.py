@@ -1,4 +1,5 @@
 from flask import Flask, jsonify
+import subscriber.main as mqtt_subscriber
 
 app = Flask(__name__)
 
@@ -17,3 +18,5 @@ def get_sensor_data():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
+    mqtt_subscriber.main()
+
