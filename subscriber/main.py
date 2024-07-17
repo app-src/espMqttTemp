@@ -26,7 +26,7 @@ def on_message(client, userdata, msg):
 
         # Save data locally with timestamp
         with open("sensor_data.txt", "a") as f:
-            f.write(f"{timestamp} - Temperature: {temperature:.2f}\n")
+            f.write("{"+f"\"timestamp\" : \"{timestamp}\",  \"temperature\": {temperature:.2f}"+"}\n")
 
         # Check if temperature exceeds threshold
         if temperature > TEMPERATURE_THRESHOLD:
