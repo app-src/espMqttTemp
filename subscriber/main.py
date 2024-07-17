@@ -3,7 +3,7 @@ import paho.mqtt.client as mqtt
 
 # Load MQTT settings from JSON file
 path = os.getcwd()
-with open(path+"\subscriber\data.json", "r") as file:
+with open(path+"\\subscriber\\data.json", "r") as file:
     data = json.load(file)
     MQTT_BROKER = data.get("MQTT_BROKER")
     MQTT_PORT = data.get("MQTT_PORT")

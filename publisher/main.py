@@ -4,6 +4,10 @@ import json
 import ubinascii
 from machine import Pin
 from umqtt.robust import MQTTClient
+import dht
+
+# Initialize the DHT22 sensor
+sensor = dht.DHT22(Pin(15))
 
 # WiFi settings
 WIFI_SSID = ""
@@ -16,6 +20,9 @@ mqtt_username = ""
 mqtt_password = ""
 client_id = ""
 topic = ""
+
+# Other declerations
+DATA_FREQUENCY_IN_SECONDS = 60
 
 # Load MQTT credentials from JSON file
 def load_credentials():
@@ -50,6 +57,16 @@ def connect_wifi():
 # Callback for MQTT messages
 def mqtt_callback(topic, msg):
     print((topic, msg))
+    
+def read_sensor_data():
+    try:
+        # Measure the temperature and humidity
+        sensor.measure()
+        temperature = sensor.temperature()
+        return(temperature)
+    except OSError as e:
+        print('Failed to read sensor.')
+        return(0.0)
 
 # Main function
 def main():
@@ -59,7 +76,7 @@ def main():
     # Connect to WiFi
     connect_wifi()
     
-    print("client_id: {} broker: {} port: {} username: {} password: {}".format(client_id.encode('utf-8'), mqtt_broker.encode('utf-8'), mqtt_port, mqtt_username.encode('utf-8'), mqtt_password.encode('utf-8')))
+    print(client_id.encode('utf-8'), mqtt_broker.encode('utf-8'), mqtt_port, mqtt_username.encode('utf-8'), mqtt_password.encode('utf-8'))
     
     # Create MQTT client and connect
     client = MQTTClient(client_id.encode('utf-8'), mqtt_broker.encode('utf-8'), port=mqtt_port, user=mqtt_username.encode('utf-8'), password=mqtt_password.encode('utf-8'))
@@ -69,16 +86,27 @@ def main():
     
     # Subscribe to a topic
     client.subscribe(topic.encode('utf-8'))
-    client.publish(topic.encode('utf-8'),"HI")
     
-    try:
-        while True:
-            # Wait for messages
-            client.wait_msg()
-    except KeyboardInterrupt:
-        print("Disconnecting...")
-        client.disconnect()
+    # Start time monitoring
+    start_time = time.time()
+    
+    while True:
+        current_time = time.time()
+        
+        # Check if 60 seconds (1 minute) have passed
+        if current_time - start_time >= DATA_FREQUENCY_IN_SECONDS:
+            # Publish sensor data
+            temperature = read_sensor_data()
+            client.publish(topic.encode('utf-8'),str(temperature))
+            
+            # Reset start time
+            start_time = current_time
+            
+        time.sleep(5)
+    
 
 # Run the main function
 if __name__ == "__main__":
     main()
+
+
